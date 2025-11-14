@@ -8,6 +8,18 @@ const pets = [
     {name:'Mazie', species:'Dog', breed:'Pit Bull mix', age: 6, image:'/images/mazie.JPG'}
 ]
 
+let favorites = [];
+function toggleFavorite(petName) {
+    if(favorites.includes(petName)) {
+        // Remove if favorited already
+        favorites = favorites.filter(name => name !== petName); 
+    } else {
+        //add it if not
+        favorites.push(petName);
+    }
+        renderPets(pets);
+}
+
 const gallery = document.getElementById('pet-gallery'); //Finds HTML element, stores it into that part of the page
 
 pets.forEach(pet=> {
@@ -44,11 +56,17 @@ function renderPets(petArray) {
 }
 
 function filterPets() {
-    const searchText = searchBar.value.toLowerCase();
     const species = speciesFilter.value;
+    const age = ageFilter.value;
 
     const filtered = pets.filter(pet => {
-        const matchesName = pet.name.toLowerCase().includes(searchText);
-    })
+        const matchesSpecies = species === "All"|| pet.species === species;
+        const matchesAge = age === "All" || pet.age == age;
+        return matchesSpecies && matchesAge;
+    });
+    renderPets(filtered);
 }
+
+speciesFilter.addEventListener("change", filterPets); 
+ageFilter.addEventListener("change", filterPets);
 

@@ -1,6 +1,3 @@
-
-
-
 *{
     box-sizing: border-box;
     margin: 0;
@@ -52,4 +49,29 @@ body {
 .pet-card:hover {
     transform: translateY(-20px);
     box-shadow: 0 4px 200px rgba(0,0,0, 0.2);
+}
+
+.fav-btn {
+    opacity: 0;
+    pointer-events: none; /*prevents clicking when invisible*/
+    transition: opacity 0.2s ease;
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    position: relative;
+    bottom: 0px;
+    cursor : pointer;
+}
+
+.pet-card:hover .fav-btn {
+    opacity: 1;
+    pointer-events: auto; /*re-enable clicking */
+}
+
+.fav-btn:hover {
+    transform: scale(1.2);
+}
+
+.fav-btn.active{
+    color:gold
 }

@@ -1,6 +1,5 @@
 console.log("JS connected!");
 
-
 const pets = [
     {name:'Nova', species:'Cat', breed:'Bengal', age: 6, image:'/images/nova.JPG'},
     {name:'Piper', species:'Dog', breed:'Cavapoo', age: 4, image:'/images/piper.jpg'},
@@ -8,53 +7,50 @@ const pets = [
     {name:'Mazie', species:'Dog', breed:'Pit Bull mix', age: 6, image:'/images/mazie.JPG'}
 ]
 
+//Favorite array and logic
 let favorites = [];
 function toggleFavorite(petName) {
     if(favorites.includes(petName)) {
         // Remove if favorited already
         favorites = favorites.filter(name => name !== petName); 
     } else {
-        //add it if not
+        //add
         favorites.push(petName);
     }
         renderPets(pets);
 }
 
-const gallery = document.getElementById('pet-gallery'); //Finds HTML element, stores it into that part of the page
-
-pets.forEach(pet=> {
-    const petCard = document.createElement('div');
-    petCard.classList.add('pet-card');
-
-    petCard.innerHTML = `
-        <img src='${pet.image}' alt = 'Picture of ${pet.name}'>
-        <h3>${pet.name} - ${pet.age} years old</h3>
-        <p>${pet.species} - ${pet.breed}</p>
-    `;
-    gallery.appendChild(petCard);
-});
-
-const searchBar = document.getElementById('search-bar');
-
+//Finds HTML element, stores it into that part of the page
+const gallery = document.getElementById('pet-gallery'); 
 const speciesFilter = document.getElementById('species-filter');
 const ageFilter = document.getElementById('age-filter');
 
 function renderPets(petArray) {
     gallery.innerHTML = '';
-
+    //Creating new card for every new object(pet)
     petArray.forEach(pet=> {
         const petCard = document.createElement('div');
         petCard.classList.add('pet-card');
 
+        const isFavorite = favorites.includes(pet.name);
+
+        //Details shown on the card
         petCard.innerHTML  = `
             <img src = "${pet.image}" alt = "Picture of ${pet.name}">
-            <h3> ${pet.name}</h3> 
-            <p>${pet.species}</p> 
+            <h3> ${pet.name} - ${pet.age} years old </h3> 
+            <p>${pet.species} - ${pet.breed}</p>
+            <button class = "fav-btn ${isFavorite ? 'active' : ''}">
+            ${isFavorite ? '★' : '☆'}
+            </button> 
         `;
+        const favBtn = petCard.querySelector('.fav-btn');
+        favBtn.addEventListener('click', () => toggleFavorite(pet.name));
+    
         gallery.appendChild(petCard);
     });
 }
 
+//Filtering logic for age and species
 function filterPets() {
     const species = speciesFilter.value;
     const age = ageFilter.value;
@@ -69,4 +65,6 @@ function filterPets() {
 
 speciesFilter.addEventListener("change", filterPets); 
 ageFilter.addEventListener("change", filterPets);
+
+renderPets(pets);
 

@@ -9,6 +9,7 @@ const pets = [
 
 //Favorite array and logic
 let favorites = [];
+let showFavoritesOnly = false;
 function toggleFavorite(petName) {
     if(favorites.includes(petName)) {
         // Remove if favorited already
@@ -21,6 +22,7 @@ function toggleFavorite(petName) {
 }
 
 //Finds HTML element, stores it into that part of the page
+const showFavsBtn = document.getElementById('show-favorites-btn');
 const gallery = document.getElementById('pet-gallery'); 
 const speciesFilter = document.getElementById('species-filter');
 const ageFilter = document.getElementById('age-filter');
@@ -60,9 +62,19 @@ function filterPets() {
         const matchesAge = age === "All" || pet.age == age;
         return matchesSpecies && matchesAge;
     });
+    if (showFavoritesOnly) {
+        filtered = filtered.filter(pet => favorites.includes(pet.name));
+    }
+
     renderPets(filtered);
 }
+showFavsBtn.addEventListener('click', () => {
+    showFavoritesOnly = !showFavoritesOnly;
 
+    showFavsBtn.textContent = showFavoritesOnly ? "Show All Pets" : "Show Favorites";
+
+    filterPets();
+});
 speciesFilter.addEventListener("change", filterPets); 
 ageFilter.addEventListener("change", filterPets);
 

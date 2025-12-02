@@ -57,7 +57,7 @@ function filterPets() {
     const species = speciesFilter.value;
     const age = ageFilter.value;
 
-    const filtered = pets.filter(pet => {
+    let filtered = pets.filter(pet => {
         const matchesSpecies = species === "All"|| pet.species === species;
         const matchesAge = age === "All" || pet.age == age;
         return matchesSpecies && matchesAge;

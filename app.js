@@ -4,7 +4,12 @@ const pets = [
     {name:'Nova', species:'Cat', breed:'Bengal', age: 6, image:'/images/nova.JPG'},
     {name:'Piper', species:'Dog', breed:'Cavapoo', age: 4, image:'/images/piper.jpg'},
     {name:'Penny', species:'Dog', breed:'Cavapoo', age: 4,image:'/images/penny.JPG'},
-    {name:'Mazie', species:'Dog', breed:'Pit Bull mix', age: 6, image:'/images/mazie.JPG'}
+    {name:'Mazie', species:'Dog', breed:'Pit Bull mix', age: 6, image:'/images/mazie.JPG'},
+    {name:'Jimbo', species:'Dog', breed:'Unknown', age: 6, image:'/images/dog1.jpeg'},
+    {name:'Samson', species:'Cat', breed:'Unknown', age: 6, image:'/images/pet1.jpeg'},
+    {name:'Mason', species:'Dog', breed:'Unknown', age: 6, image:'/images/dog3.jpeg'},
+    {name:'BeeGee', species:'Cat', breed:'Unknown', age: 6, image:'/images/pet2.jpeg'},
+    {name:'Smokey', species:'Dog', breed:'Unknown', age: 6, image:'/images/dog4.jpeg'}
 ]
 
 //Favorite array and logic
@@ -57,7 +62,7 @@ function filterPets() {
     const species = speciesFilter.value;
     const age = ageFilter.value;
 
-    let filtered = pets.filter(pet => {
+     filtered = pets.filter(pet => {
         const matchesSpecies = species === "All"|| pet.species === species;
         const matchesAge = age === "All" || pet.age == age;
         return matchesSpecies && matchesAge;

@@ -1,15 +1,14 @@
 console.log("JS connected!");
 
 const pets = [
-    {name:'Nova', species:'Cat', breed:'Bengal', age: 6, image:'/images/nova.JPG'},
-    {name:'Piper', species:'Dog', breed:'Cavapoo', age: 4, image:'/images/piper.jpg'},
-    {name:'Penny', species:'Dog', breed:'Cavapoo', age: 4,image:'/images/penny.JPG'},
-    {name:'Mazie', species:'Dog', breed:'Pit Bull mix', age: 6, image:'/images/mazie.JPG'},
-    {name:'Jimbo', species:'Dog', breed:'Unknown', age: 6, image:'/images/dog1.jpeg'},
-    {name:'Samson', species:'Cat', breed:'Unknown', age: 6, image:'/images/pet1.jpeg'},
-    {name:'Mason', species:'Dog', breed:'Unknown', age: 6, image:'/images/dog3.jpeg'},
-    {name:'BeeGee', species:'Cat', breed:'Unknown', age: 6, image:'/images/pet2.jpeg'},
-    {name:'Smokey', species:'Dog', breed:'Unknown', age: 6, image:'/images/dog4.jpeg'}
+    {name:'Nova', species:'Cat', breed:'Bengal', age: 6, unit:'years',  image:'/images/nova.JPG'},
+    {name:'Piper', species:'Dog', breed:'Cavapoo', age: 4, unit:'years',  image:'/images/piper.jpg'},
+    {name:'Penny', species:'Dog', breed:'Cavapoo', age: 4, unit:'years', image:'/images/penny.JPG'},
+    {name:'Mazie', species:'Dog', breed:'Pit Bull mix', age: 6, unit:'years',  image:'/images/mazie.JPG'},
+    {name:'Jimbo', species:'Dog', breed:'Unknown', age: 1, unit:'year',  image:'/images/dog1.jpeg'},
+    {name:'Samson', species:'Cat', breed:'Unknown', age: 5, unit:'years',  image:'/images/pet1.jpeg'},
+    {name:'Mason', species:'Dog', breed:'Unknown', age: 3, unit:'years',  image:'/images/dog3.jpeg'},
+    {name:'Smokey', species:'Dog', breed:'Unknown', age: 1, unit:'year', image:'/images/dog4.jpeg'}
 ]
 
 //Favorite array and logic
@@ -44,7 +43,7 @@ function renderPets(petArray) {
         //Details shown on the card
         petCard.innerHTML  = `
             <img src = "${pet.image}" alt = "Picture of ${pet.name}">
-            <h3> ${pet.name} - ${pet.age} years old </h3> 
+            <h3> ${pet.name} - ${pet.age} ${pet.unit} old </h3> 
             <p>${pet.species} - ${pet.breed}</p>
             <button class = "fav-btn ${isFavorite ? 'active' : ''}">
             ${isFavorite ? '★' : '☆'}
@@ -62,7 +61,7 @@ function filterPets() {
     const species = speciesFilter.value;
     const age = ageFilter.value;
 
-     filtered = pets.filter(pet => {
+    let filtered = pets.filter(pet => {
         const matchesSpecies = species === "All"|| pet.species === species;
         const matchesAge = age === "All" || pet.age == age;
         return matchesSpecies && matchesAge;
@@ -80,6 +79,25 @@ showFavsBtn.addEventListener('click', () => {
 
     filterPets();
 });
+
+
+function addAgeFilter () {
+    const ages = [...new Set(pets.map(pet => pet.age))]; //Unique ages
+
+    ages.sort((a, b) => a-b); // Sort by age
+
+    ages.forEach(age => {
+        const option = document.createElement("option"); //Creates new age from cards
+        option.value = age;
+        option.textContent = `${age}`;
+        ageFilter.appendChild(option);
+    });
+}
+
+addAgeFilter();
+
+
+
 speciesFilter.addEventListener("change", filterPets); 
 ageFilter.addEventListener("change", filterPets);
 
